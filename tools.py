@@ -1,6 +1,8 @@
 import requests
 from langchain_core.tools import tool
+from langchain_tavily import TavilySearch
 from datetime import datetime
+
 @tool
 def get_weather(city: str) -> str:
     """
@@ -27,3 +29,52 @@ def get_date() -> str:
         str: Current date and time.
     """
     return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+@tool
+def multiply(a: int, b: int) -> int:
+    """Multiply a and b.
+
+    Args:
+        a: first int
+        b: second int
+    """
+    return a * b
+
+@tool
+def add(a: int, b: int) -> int:
+    """Adds a and b.
+
+    Args:
+        a: first int
+        b: second int
+    """
+    return a + b
+
+@tool
+def divide(a: int, b: int) -> float:
+    """Divide a and b.
+
+    Args:
+        a: first int
+        b: second int
+    """
+    return a / b
+
+
+
+@tool
+def internet_search(query: str, n_results: int = 2): 
+    """search internet for a query
+    using TavilySearch
+    This function is a wrapper around the TavilySearch class from langchain_tavily.
+    It allows you to perform a search using the Tavily API.
+    The function takes a query string and an optional number of results to return.
+
+    Args:
+        query (str): _description_
+        n_results (int, optional): _description_. Defaults to 2.
+
+    Returns:
+        _type_: _description_
+    """
+    return TavilySearch(max_results=n_results)
