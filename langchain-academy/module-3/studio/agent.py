@@ -1,8 +1,13 @@
 from langchain_core.messages import SystemMessage
-from langchain_openai import ChatOpenAI
-
+from langchain_anthropic import ChatAnthropic
 from langgraph.graph import START, StateGraph, MessagesState
 from langgraph.prebuilt import tools_condition, ToolNode
+
+#model specs 
+_anthropic_model = 'claude-3-haiku-20240307'
+_temparate = 0
+_max_tokens = 4000
+_streaming = True
 
 def add(a: int, b: int) -> int:
     """Adds a and b.
@@ -34,7 +39,16 @@ def divide(a: int, b: int) -> float:
 tools = [add, multiply, divide]
 
 # Define LLM with bound tools
-llm = ChatOpenAI(model="gpt-4o")
+# LLM
+llm =  ChatAnthropic(
+    model=_anthropic_model,
+    temperature=_temparate,
+    max_tokens=_max_tokens,
+    streaming=_streaming,
+    verbose=True,
+)
+
+
 llm_with_tools = llm.bind_tools(tools)
 
 # System message
