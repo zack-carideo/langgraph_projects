@@ -35,9 +35,11 @@ def generate_summary(state):
     failures = state["failures"]
     # Add fxn: fa_summary = summarize(failures)
     fa_summary = "Poor quality retrieval of Chroma documentation."
-    return {"fa_summary": fa_summary, "processed_logs": [f"failure-analysis-on-log-{failure['id']}" for failure in failures]}
+    return {"fa_summary": fa_summary
+            , "processed_logs": [f"failure-analysis-on-log-{failure['id']}" for failure in failures]}
 
-fa_builder = StateGraph(input=FailureAnalysisState,output=FailureAnalysisOutputState)
+fa_builder = StateGraph(input=FailureAnalysisState
+                        ,output=FailureAnalysisOutputState)
 fa_builder.add_node("get_failures", get_failures)
 fa_builder.add_node("generate_summary", generate_summary)
 fa_builder.add_edge(START, "get_failures")
